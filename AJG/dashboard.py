@@ -1,7 +1,7 @@
 # Import python packages
 import streamlit as st
 from snowflake.snowpark.context import get_active_session
-
+import matplotlib.pyplot as plt
 
 st.title("Claims Processing Dashboard")
 st.subheader("AJ Gallagher UK (Speciality)")
@@ -10,6 +10,8 @@ st.write(
 the most important insights for a claims manager, with a minimum of 6 key insights. (if
 you don’t have access to a tool, please create a dashboard like experience in Excel)
     """)
+
+st.markdown('---')
 
 ###################
 ### Get Session ###
@@ -41,3 +43,39 @@ col3.metric("Urgent Claims Meeting SLA", f"{round(std['TOTAL'][0]/1310*100,2)} %
 
 monthly_claims = session.sql('''select * from "3_PRESENTATION".MONTHLY_CLAIMS;''').to_pandas()
 st.bar_chart(monthly_claims, x="MONTH_NUMBER", y="NUMBER_CLAIMS")
+
+##################
+### RAG Charts ###
+##################
+st.subheader('RAG status for Urgent/Standard Subtasks Compared to SLA')
+
+rag_col1, rag_col2 = st.columns(2)
+
+#Urgent RAG pie chart
+with rag_col1:
+    st.write('Urgent Subtasks')
+    urgent_rag = session.sql('''select rag, urgency, count(task) as cnt from AJG."2_ENRICHED".SUBTASK_RAG group by rag, urgency having urgency='Urgent';''').to_pandas()
+    sizes = [urgent_rag['CNT'][0],urgent_rag['CNT'][1],urgent_rag['CNT'][2]]
+    colors = {'ORANGE': 'orange',
+              'GREEN': 'green',
+              'RED': 'red'}
+    
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, autopct='%1.1f%%', startangle=0, colors=colors)
+    ax1.axis('equal') 
+    st.pyplot(fig1)
+
+
+
+#Standard RAG pie chart
+with rag_col2:
+    st.write('Standard Subtasks')
+    standard_rag = session.sql('''select rag, urgency, count(task) as cnt from AJG."2_ENRICHED".SUBTASK_RAG group by rag, urgency having urgency='Standard';''').to_pandas()
+    sizes = [standard_rag['CNT'][0],standard_rag['CNT'][1],standard_rag['CNT'][2]]
+    colors = {'RED': 'red',
+              'ORANGE': 'orange',
+              'GREEN': 'green'}
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, autopct='%1.1f%%', startangle=90, colors=colors)
+    ax1.axis('equal') 
+    st.pyplot(fig1)
