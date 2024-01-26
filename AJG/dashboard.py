@@ -26,8 +26,8 @@ st.markdown('<hr style="border:.5px solid #1669c9">', unsafe_allow_html=True)
 
 connection_parameters = {
     "account": "fb59538.eu-west-2.aws",
-    "user": "DOUGALTOMS",
-    "password": "Drimlee99",
+    "user": "***",
+    "password": "***",
     "role": "ACCOUNTADMIN", 
     "warehouse": "COMPUTE_WH",
     "database": "AJG"
@@ -82,9 +82,10 @@ with key2:
 ### Area Chart ###
 ##################
 st.write('**Cumulative Count of Subtasks by Team**')
+st.caption('Large disparity between most (Energy) and least (Financial Risks) busy teams')
 df = session.sql('''select * from AJG."3_PRESENTATION".cumulative_subtasks_by_team where team = 'Energy' or team = 'Financial Risks' ''').to_pandas()
 st.area_chart(df, x="WEEK",y="CUMULATIVE_COUNT", color="TEAM")
-st.caption('Large disparity between most and least busy teams')
+
 
 ##########################
 ### Subtask RAG Charts ###
@@ -196,7 +197,7 @@ st.write('''LLM-powered chat bots can be used to generate queries against data i
 \nExample question: 'What is the most common workflow type when processing claims?' ''')
 
 
-openai.api_key="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"
+openai.api_key="***"
 
 prompt = """
     You will be acting as an AI Snowflake SQL Expert for an insurance company.
