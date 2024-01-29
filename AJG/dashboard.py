@@ -108,7 +108,7 @@ with tab2:
     st.subheader('Filter RAG Charts By Location / Team')
 
     # Get Location info for filters
-    if 'info' in st.session_state:
+    if 'info' not in st.session_state:
         st.session_state['info'] = session.sql('''select distinct location, team from AJG."2_ENRICHED".SUBTASK_RAG where location is not null or team is not null order by 1, 2;''').to_pandas()
 
     locations = st.session_state['info']["LOCATION"].unique()
