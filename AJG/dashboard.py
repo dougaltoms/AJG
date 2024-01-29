@@ -21,16 +21,16 @@ st.markdown('<hr style="border:.5px solid #1669c9">', unsafe_allow_html=True)
 ### Get Session ###
 ###################
 
-# connection_parameters = {
-#     "account": "fb59538.eu-west-2.aws",
-#     "user": "DOUGALTOMS",
-#     "password": "Drimlee99",
-#     "role": "ACCOUNTADMIN", 
-#     "warehouse": "COMPUTE_WH",
-#     "database": "AJG"
-#   }  
+connection_parameters = {
+    "account": st.secrets["account"],
+    "user": st.secrets["user"],
+    "password": st.secrets["password"],
+    "role": "ACCOUNTADMIN", 
+    "warehouse": "COMPUTE_WH",
+    "database": "AJG"
+  }  
 
-connection_parameters = st.secrets['connection_parameters']
+# connection_parameters = st.secrets['connection_parameters']
 
 tab1, tab2, tab3 = st.tabs(["Key Metrics", "RAG Status", "AI SQL Assisstant"])
 
