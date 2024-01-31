@@ -230,7 +230,7 @@ with tab3:
     \nExample question: 'What is the most common workflow type when processing claims?' ''')
 
 
-    openai.api_key= "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"
+    openai.api_key= st.secrets["api_key"]
     prompt = """
         You will be acting as an AI Snowflake SQL Expert for an insurance company.
         Your goal is to give correct, executable sql query to users.
