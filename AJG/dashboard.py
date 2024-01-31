@@ -22,9 +22,9 @@ st.markdown('<hr style="border:.5px solid #1669c9">', unsafe_allow_html=True)
 ###################
 
 connection_parameters = {
-    "account": st.secrets["account"],
-    "user": st.secrets["user"],
-    "password": st.secrets["password"],
+    "account": "fb59538.eu-west-2.aws",
+    "user": "DOUGALTOMS",
+    "password": "Drimlee99",
     "role": "ACCOUNTADMIN", 
     "warehouse": "COMPUTE_WH",
     "database": "AJG"
@@ -217,7 +217,7 @@ with tab2:
 
         count = session.sql('''select count(*) as "COUNT" from AJG."2_ENRICHED".COMBINED_WITH_TIMES''').to_pandas()
         st.write(f'{count["COUNT"][0]} records (reassigned subtasks removed)')
-        df = session.sql('''select * from AJG."2_ENRICHED".COMBINED_WITH_TIMES''').to_pandas()
+        df = session.sql('''select * exclude total_business_hours, ifnull(total_business_hours::string, 'Incomplete') as total_business_hours from AJG."2_ENRICHED".COMBINED_WITH_TIMES''').to_pandas()
         st.dataframe(df)
 
 with tab3:
@@ -230,7 +230,7 @@ with tab3:
     \nExample question: 'What is the most common workflow type when processing claims?' ''')
 
 
-    openai.api_key= st.secrets['api_key']
+    openai.api_key= "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"
     prompt = """
         You will be acting as an AI Snowflake SQL Expert for an insurance company.
         Your goal is to give correct, executable sql query to users.
