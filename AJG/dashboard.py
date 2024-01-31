@@ -217,7 +217,7 @@ with tab2:
 
         count = session.sql('''select count(*) as "COUNT" from AJG."2_ENRICHED".COMBINED_WITH_TIMES''').to_pandas()
         st.write(f'{count["COUNT"][0]} records (reassigned subtasks removed)')
-        df = session.sql('''select * exclude total_business_hours, ifnull(total_business_hours::string, 'Incomplete') as total_business_hours from AJG."2_ENRICHED".COMBINED_WITH_TIMES''').to_pandas()
+        df = session.sql('''select * exclude total_business_hours from AJG."2_ENRICHED".COMBINED_WITH_TIMES''').collect()
         st.dataframe(df)
 
 with tab3:
