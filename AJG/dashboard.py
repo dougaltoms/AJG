@@ -59,7 +59,8 @@ with tab1:
     # Total claims this month compared to last
     if 'total_claims' not in st.session_state:
         st.session_state['total_claims'] = session.sql('''select month("MONTH_START"), count from AJG."3_PRESENTATION".last_month_claims;''').to_pandas()
-    col2.metric("Claims This Month", f"{st.session_state['total_claims']['COUNT'][1]}", f"{st.session_state['total_claims']['COUNT'][1]-st.session_state['total_claims']['COUNT'][0]}")
+    st.dataframe(st.session_state['total_claims'])
+    #col2.metric("Claims This Month", f"{st.session_state['total_claims']['COUNT'][1]}", f"{st.session_state['total_claims']['COUNT'][1]-st.session_state['total_claims']['COUNT'][0]}")
 
     # Percentage of urgent claims meeting SLA
     if 'std2' not in st.session_state:
@@ -230,7 +231,8 @@ with tab3:
     \nExample question: 'What is the most common workflow type when processing claims?' ''')
 
 
-    openai.api_key= st.secrets["api_key"]
+    openai.api_key= st.secrets["api_key"] 
+    
     prompt = """
         You will be acting as an AI Snowflake SQL Expert for an insurance company.
         Your goal is to give correct, executable sql query to users.
