@@ -60,6 +60,7 @@ with tab1:
     if 'total_claims' not in st.session_state:
         st.session_state['total_claims'] = session.sql('''select month("MONTH_START"), count from AJG."3_PRESENTATION".last_month_claims;''').to_pandas()
     st.dataframe(st.session_state['total_claims'])
+    col2.metic('Claims This Month', f"{st.session_state['total_claims']['COUNT'][1]}")
     #col2.metric("Claims This Month", f"{st.session_state['total_claims']['COUNT'][1]}", f"{st.session_state['total_claims']['COUNT'][1]-st.session_state['total_claims']['COUNT'][0]}")
 
     # Percentage of urgent claims meeting SLA
