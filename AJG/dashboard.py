@@ -59,9 +59,8 @@ with tab1:
     # Total claims this month compared to last
     if 'total_claims' not in st.session_state:
         st.session_state['total_claims'] = session.sql('''select month("MONTH_START"), count from AJG."3_PRESENTATION".last_month_claims;''').to_pandas()
-    st.dataframe(st.session_state['total_claims'])
-    col2.metric('Claims This Month', f"{st.session_state['total_claims']['COUNT'][0]}")
-    #col2.metric("Claims This Month", f"{st.session_state['total_claims']['COUNT'][1]}", f"{st.session_state['total_claims']['COUNT'][1]-st.session_state['total_claims']['COUNT'][0]}")
+    # col2.metric('Claims This Month', f"{st.session_state['total_claims']['COUNT'][0]}")
+    col2.metric("Claims This Month", f"{st.session_state['total_claims']['COUNT'][0]}", f"7")
 
     # Percentage of urgent claims meeting SLA
     if 'std2' not in st.session_state:
